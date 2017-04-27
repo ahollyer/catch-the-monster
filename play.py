@@ -30,7 +30,10 @@ def main():
 
 
         # Game logic
-        monster_pos[x] += 1
+        if monster_pos[x] > 512:
+            monster_pos[x] = 0
+        else:
+            monster_pos[x] += 3
 
         # Draw background
         screen.fill(blue_color)
