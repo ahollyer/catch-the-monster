@@ -8,6 +8,7 @@ KEY_UP = 273
 KEY_DOWN = 274
 KEY_LEFT = 276
 KEY_RIGHT = 275
+KEY_SPACE = 32
 
 def main():
     width = 512
@@ -27,7 +28,7 @@ def main():
     hero_sprite = pygame.image.load('images/hero.png')
     monster_sprite = pygame.image.load('images/monster.png')
     win_sound = pygame.mixer.Sound('sounds/win.wav')
-    win_text = font.render('Hit ENTER to play again', False, (0, 0, 0))
+    win_text = font.render('Hit SPACE to play again', False, (0, 0, 0))
 
     stop_game = False
     game_won = False
@@ -61,6 +62,12 @@ def main():
             # Click X to quit
             if event.type == pygame.QUIT:
                 stop_game = True
+
+            # Use enter to start new game after winning
+            if game_won:
+                if event.type == pygame.KEYUP:
+                    if event.key == KEY_SPACE:
+                        main()
 
 
         # Game logic
