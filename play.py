@@ -31,14 +31,16 @@ def main():
 
 
         # Game logic
-        # def set_axis(sprite_pos):
-        #     axis = random.randint(0, 2)
-        #     if axis == x:
-        #         direction = sprite_pos[x]
-        #     else:
-        #         direction = sprite_pos[y]
-        #
-        def move_random(sprite_pos):
+        def move_left(sprite_pos):
+            sprite_pos[x] -= 3
+        def move_right(sprite_pos):
+            sprite_pos[x] += 3
+        def move_up(sprite_pos):
+            sprite_pos[y] -= 3
+        def move_down(sprite_pos):
+            sprite_pos[y] += 3
+
+        def wrap_pos(sprite_pos):
             if sprite_pos[x] > width:
                 sprite_pos[x] = 0
             elif sprite_pos[x] < 0:
@@ -47,11 +49,6 @@ def main():
                 sprite_pos[y] = 0
             elif sprite_pos[y] < 0:
                 sprite_pos[y] = height
-            else:
-                # set_axis()
-                # move()
-                sprite_pos[x] -= 3
-        move_random(monster_pos)
 
         # Draw background
         screen.fill(blue_color)
