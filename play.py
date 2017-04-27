@@ -1,8 +1,9 @@
 import pygame
 import math
 
-from toons.monster import Monster
+from toons.goblin import Goblin
 from toons.hero import Hero
+from toons.monster import Monster
 
 KEY_UP = 273
 KEY_DOWN = 274
@@ -22,9 +23,12 @@ def main():
 
     # Game initialization
     monster = Monster(width=width, height=height)
+    goblin = Goblin(width=width, height=height)
     hero = Hero()
+
     background_image = pygame.image.load(
         'images/background.png').convert_alpha()
+    goblin_sprite = pygame.image.load('images/goblin.png')
     hero_sprite = pygame.image.load('images/hero.png')
     monster_sprite = pygame.image.load('images/monster.png')
     win_sound = pygame.mixer.Sound('sounds/win.wav')
@@ -74,6 +78,11 @@ def main():
         monster.wrap()
         monster.change_dir()
         monster.move()
+
+        goblin.wrap()
+        goblin.change_dir()
+        goblin.move()
+
         hero.move()
 
         # Check positions of hero/monster
@@ -88,6 +97,7 @@ def main():
         # Game display
         screen.blit(background_image, (0, 0))
         screen.blit(hero_sprite, (hero.x, hero.y))
+        screen.blit(goblin_sprite, (goblin.pos[0], goblin.pos[1]))
         if monster.alive:
             screen.blit(monster_sprite, (monster.pos[0], monster.pos[1]))
         if game_won:
