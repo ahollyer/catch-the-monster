@@ -5,8 +5,13 @@ def main():
     width = 512
     height = 480
     blue_color = (97, 159, 182)
+
+    # sprite postitioning/movement
     x = 0
     y = 1
+    speed_x = 3
+    speed_y = -3
+    change_dir_countdown = 60
 
     pygame.init()
     screen = pygame.display.set_mode((width, height))
@@ -31,24 +36,26 @@ def main():
 
 
         # Game logic
-        def move_left(sprite_pos):
-            sprite_pos[x] -= 3
-        def move_right(sprite_pos):
-            sprite_pos[x] += 3
-        def move_up(sprite_pos):
-            sprite_pos[y] -= 3
-        def move_down(sprite_pos):
-            sprite_pos[y] += 3
+        def wrap_monster():
+            if monster_pos[x] > width:
+                monster_pos[x] = 0
+            elif monster_pos[x] < 0:
+                monster_pos[x] = width
+            elif monster_pos[y] > height:
+                monster_pos[y] = 0
+            elif monster_pos[y] < 0:
+                monster_pos[y] = height
 
-        def wrap_pos(sprite_pos):
-            if sprite_pos[x] > width:
-                sprite_pos[x] = 0
-            elif sprite_pos[x] < 0:
-                sprite_pos[x] = width
-            elif sprite_pos[y] > height:
-                sprite_pos[y] = 0
-            elif sprite_pos[y] < 0:
-                sprite_pos[y] = height
+        wrap_monster()
+        monster_pos[x] += speed_x
+        monster_pos[y] += speed_y
+
+        change_dir_countdown -= 1
+        if change_dir_countdown == 0:
+            speed_x = random.randint(-5, 5)
+            speed_y = random.randint(-5, 5)
+            change_dir_countdown = 60
+
 
         # Draw background
         screen.fill(blue_color)
@@ -56,6 +63,7 @@ def main():
         # Game display
         screen.blit(background_image, (0, 0))
         screen.blit(hero, (250, 240))
+        print(monster_pos)
         screen.blit(monster, (monster_pos[x], monster_pos[y]))
         pygame.display.update()
         clock.tick(60)
