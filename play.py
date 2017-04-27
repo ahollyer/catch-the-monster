@@ -1,4 +1,5 @@
 import pygame
+import random
 
 def main():
     width = 512
@@ -30,10 +31,27 @@ def main():
 
 
         # Game logic
-        if monster_pos[x] > 512:
-            monster_pos[x] = 0
-        else:
-            monster_pos[x] += 3
+        # def set_axis(sprite_pos):
+        #     axis = random.randint(0, 2)
+        #     if axis == x:
+        #         direction = sprite_pos[x]
+        #     else:
+        #         direction = sprite_pos[y]
+        #
+        def move_random(sprite_pos):
+            if sprite_pos[x] > width:
+                sprite_pos[x] = 0
+            elif sprite_pos[x] < 0:
+                sprite_pos[x] = width
+            elif sprite_pos[y] > height:
+                sprite_pos[y] = 0
+            elif sprite_pos[y] < 0:
+                sprite_pos[y] = height
+            else:
+                # set_axis()
+                # move()
+                sprite_pos[x] -= 3
+        move_random(monster_pos)
 
         # Draw background
         screen.fill(blue_color)
