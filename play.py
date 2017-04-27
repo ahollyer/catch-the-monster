@@ -4,6 +4,8 @@ def main():
     width = 512
     height = 480
     blue_color = (97, 159, 182)
+    x = 0
+    y = 1
 
     pygame.init()
     screen = pygame.display.set_mode((width, height))
@@ -15,6 +17,8 @@ def main():
         'images/background.png').convert_alpha()
     hero = pygame.image.load('images/hero.png')
     monster = pygame.image.load('images/monster.png')
+    monster_pos = [30, 25]
+
     stop_game = False
     while not stop_game:
         for event in pygame.event.get():
@@ -26,6 +30,7 @@ def main():
 
 
         # Game logic
+        monster_pos[x] += 1
 
         # Draw background
         screen.fill(blue_color)
@@ -33,7 +38,7 @@ def main():
         # Game display
         screen.blit(background_image, (0, 0))
         screen.blit(hero, (250, 240))
-        screen.blit(monster, (30, 25))
+        screen.blit(monster, (monster_pos[x], monster_pos[y]))
         pygame.display.update()
         clock.tick(60)
 
