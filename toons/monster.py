@@ -1,5 +1,10 @@
+import random
+
 class Monster:
-        def __init__(self, pos=[30, 25], speed_x=3, speed_y=-3, change_dir_countdown=60, width=0, height=0):
+        def __init__(
+            self, pos=[30, 25], speed_x=0, speed_y=0,
+            change_dir_countdown=60, width=0, height=0
+            ):
             self.pos = pos
             self.speed_x = speed_x
             self.speed_y = speed_y
@@ -21,3 +26,10 @@ class Monster:
             self.pos[0] += self.speed_x
             self.pos[1] += self.speed_y
             return [self.pos[0], self.pos[1]]
+
+        def change_dir(self):
+            self.change_dir_countdown -= 1
+            if self.change_dir_countdown == 0:
+                self.speed_x = random.randint(-5, 5)
+                self.speed_y = random.randint(-5, 5)
+                self.change_dir_countdown = 60
