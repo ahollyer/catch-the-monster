@@ -15,17 +15,19 @@ def main():
 
     pygame.init()
     screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption('My Game')
+    pygame.display.set_caption('ThuggyKnight: Catch dat Monsta')
     clock = pygame.time.Clock()
+    font = pygame.font.Font(None, 30)
 
     # Game initialization
     monster = Monster(width=width, height=height)
     hero = Hero()
-
     background_image = pygame.image.load(
         'images/background.png').convert_alpha()
     hero_sprite = pygame.image.load('images/hero.png')
     monster_sprite = pygame.image.load('images/monster.png')
+    win_sound = pygame.mixer.Sound('sounds/win.wav')
+    win_text = font.render('Hit ENTER to play again', False, (0, 0, 0))
 
     stop_game = False
     game_won = False
@@ -65,26 +67,30 @@ def main():
         monster.wrap()
         monster.change_dir()
         monster.move()
+        hero.move()
 
         # Check positions of hero/monster
         collision_test = math.sqrt((hero.x - monster.pos[0])**2 + (hero.y - monster.pos[1])**2)
 
         if collision_test < 32:
             game_won = True
-        hero.move()
 
         if game_won:
-            print("you won")
-
+            monster.alive = False
 
         # Game display
         screen.blit(background_image, (0, 0))
         screen.blit(hero_sprite, (hero.x, hero.y))
-        screen.blit(monster_sprite, (monster.pos[0], monster.pos[1]))
+        if monster.alive:
+            screen.blit(monster_sprite, (monster.pos[0], monster.pos[1]))
+        if game_won:
+            win_sound.play()
+            screen.blit(win_text, (150, 200))
         pygame.display.update()
         clock.tick(60)
 
     pygame.quit()
+
 
 if __name__ == '__main__':
     main()

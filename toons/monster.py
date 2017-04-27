@@ -3,12 +3,13 @@ import random
 class Monster:
         def __init__(
             self, pos=[30, 25], speed_x=0, speed_y=0,
-            change_dir_countdown=60, width=0, height=0
+            change_dir_countdown=60, alive=True, width=0, height=0
             ):
             self.pos = pos
             self.speed_x = speed_x
             self.speed_y = speed_y
             self.change_dir_countdown = change_dir_countdown
+            self.alive = alive
             self.width = width
             self.height = height
 
