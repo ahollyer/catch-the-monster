@@ -1,4 +1,5 @@
 import pygame
+import math
 
 from toons.monster import Monster
 from toons.hero import Hero
@@ -27,10 +28,11 @@ def main():
     monster_sprite = pygame.image.load('images/monster.png')
 
     stop_game = False
+    game_won = False
     while not stop_game:
         for event in pygame.event.get():
 
-            # Event handling
+            # Hero movement controls
             if event.type == pygame.KEYDOWN:
                 # activate the corresponding speeds
                 # when an arrow key is pressed down
@@ -54,7 +56,7 @@ def main():
                 elif event.key == KEY_RIGHT:
                     hero.speed_x = 0
 
-
+            # Click X to quit
             if event.type == pygame.QUIT:
                 stop_game = True
 
@@ -64,7 +66,15 @@ def main():
         monster.change_dir()
         monster.move()
 
+        # Check positions of hero/monster
+        collision_test = math.sqrt((hero.x - monster.pos[0])**2 + (hero.y - monster.pos[1])**2)
+
+        if collision_test < 32:
+            game_won = True
         hero.move()
+
+        if game_won:
+            print("you won")
 
 
         # Game display
