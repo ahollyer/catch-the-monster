@@ -32,10 +32,13 @@ def main():
     hero_sprite = pygame.image.load('images/hero.png')
     monster_sprite = pygame.image.load('images/monster.png')
     win_sound = pygame.mixer.Sound('sounds/win.wav')
-    win_text = font.render('Hit SPACE to play again', False, (0, 0, 0))
+    win_text = font.render('You win! Hit SPACE to play again.', False, (0, 0, 0))
+    lose_sound = pygame.mixer.Sound('sounds/lose.wav')
+    lose_text = font.render('Haha you suck. Hit SPACE to play again.', False, (255, 0, 0))
 
     stop_game = False
     game_won = False
+    game_lost = False
     while not stop_game:
         for event in pygame.event.get():
 
@@ -85,10 +88,16 @@ def main():
 
         hero.move()
 
-        # Check positions of hero/monster
-        collision_test = math.sqrt((hero.x - monster.pos[0])**2 + (hero.y - monster.pos[1])**2)
+        # Check positions of sprites
+        goblin_collision_test = math.sqrt((hero.x - goblin.pos[0])**2 + (hero.y - goblin.pos[1])**2)
 
-        if collision_test < 32:
+        if goblin_collision_test < 32:
+            game_lost = True
+
+
+        monster_collision_test = math.sqrt((hero.x - monster.pos[0])**2 + (hero.y - monster.pos[1])**2)
+
+        if monster_collision_test < 32:
             game_won = True
 
         if game_won:
@@ -103,6 +112,9 @@ def main():
         if game_won:
             win_sound.play()
             screen.blit(win_text, (150, 200))
+        if game_lost:
+            lose_sound.play()
+            screen.blit(lose_text, (80, 200))
         pygame.display.update()
         clock.tick(60)
 
